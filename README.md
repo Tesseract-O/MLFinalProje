@@ -70,3 +70,6 @@ more false alarms; a higher one is more cautious.
 ## Run locally
 pip install -r requirements.txt
 streamlit run app.py
+
+## Run Streamlit
+https://tesseract-o-mlfinalproje-app-mwevc4.streamlit.app/
