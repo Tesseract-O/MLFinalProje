@@ -32,7 +32,28 @@ Evaluated with 5-fold stratified cross-validation on the training set:
 Logistic regression was chosen: it performs about as well as XGBoost,
 and is simpler and easier to interpret.
 
-**Final test set result:** ROC-AUC [0.82], F1 [0.75], recall [0.75], precision [0.75]
+**Final test set result** (375 held-out bookings, threshold = [your threshold]):
+
+| Metric | Value |
+|---|---|
+| ROC-AUC | 0.82 |
+| Recall (attended) | 0.75 |
+| Precision (attended) | 0.57 |
+| F1 (attended) | 0.65 |
+
+Test results are consistent with cross-validation (ROC-AUC 0.82, F1 0.63),
+so the model does not appear to be overfitting.
+
+Confusion matrix:
+
+|  | Predicted no-show | Predicted attend |
+|---|---|---|
+| **Actually no-show** | 198 | 63 |
+| **Actually attended** | 29 | 85 |
+
+The model catches about 3 out of 4 attendees, but about 4 out of 10
+"will attend" predictions are false alarms. The decision threshold in the app
+lets the club trade one against the other.
 
 ## How to use the app
 The model outputs an attendance probability. The decision threshold turns it
@@ -43,6 +64,8 @@ more false alarms; a higher one is more cautious.
 - Small dataset (1,500 rows); results may not generalize to other gyms.
 - Findings show association, not causation.
 - The model gives estimates, not guarantees.
+- Overall accuracy (75%) is only about 5 points above always predicting "no-show" (~70%),
+  so ROC-AUC, recall and F1 are the more meaningful metrics here.
 
 ## Run locally
 pip install -r requirements.txt
